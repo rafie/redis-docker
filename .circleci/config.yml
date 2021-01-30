@@ -25,7 +25,7 @@ jobs:
           no_output_timeout: 30m
       - run:
           name: Build centos7
-          command: make build publish CROSS=1 OSNICK=centos7 STD_VERSIONS=1
+          command: make build publish OSNICK=centos7 STD_VERSIONS=1
           no_output_timeout: 30m
       - run:
           name: Build ubuntu:focal
