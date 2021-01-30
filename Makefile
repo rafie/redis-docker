@@ -1,7 +1,7 @@
 .NOTPARALLEL:
 
 # 5.0.x|6.0.x|5|6
-VERSION ?= 6.0.9
+VERSION ?= 6.0.10
 # LATEST=1
 # MASTER=1
 
@@ -46,6 +46,10 @@ OS.fedora=fedora:30
 OS.fedora30=fedora:30
 OS.rhel7.4=rhel:7.4
 OS=$(OS.$(OSNICK))
+
+ifeq ($(OS),)
+$(error Probably wrong OSNICK specified ($(OSNICK)))
+endif
 
 #----------------------------------------------------------------------------------------------
 

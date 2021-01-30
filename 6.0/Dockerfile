@@ -31,7 +31,7 @@ ADD 6.0/*.patch /build/
 ADD 6.0/build-fix-* /build/
 
 # ENV REDIS_DEPENDS "ca-certificates dirmngr gnupg wget gcc libc6-dev make"
-RUN /build/deps/readies/bin/getpy2
+RUN /build/deps/readies/bin/getpy3
 RUN /build/system-setup.py
 RUN gcc --version
 
