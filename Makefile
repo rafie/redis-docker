@@ -26,7 +26,7 @@ endif
 ARCH:=$(shell ./deps/readies/bin/platform --arch)
 
 ifeq ($(ARCH),x64)
-CROSS ?= 1
+#
 else ifeq ($(CROSS),1)
 $(error Cannot cross-build on ARM)
 endif
@@ -189,14 +189,14 @@ publish  Push image(s) to Docker Hub
 commons  Build common versions (with DO="<operations>")
 
 Arguments:
-CROSS=1          Perform cross-platform builds (typically, ARM7/8 on x64)
-OSNICK           buster|stretch|xenial|bionic|centos6|centos7|centos8|fedora30
-OS               (optional) OS Docker image name (e.g., debian:buster-slim)
-VERSION          Redis version (e.g. $(VERSION))
-MASTER=1         Build sources from master branch ("edge" version)
-LATEST=1         Build the latest version of branch given by VERSION
-TEST=1           Run tests after build
-CACHE=0          Build without cache
+CROSS=1       Perform cross-platform builds (typically, ARM7/8 on x64)
+OSNICK=nick   nick=buster|stretch|xenial|bionic|centos6|centos7|centos8|fedora30
+OS=os         (optional) OS Docker image name (e.g., debian:buster-slim)
+VERSION=ver   Redis version (e.g. $(VERSION))
+MASTER=1      Build sources from master branch ("edge" version)
+LATEST=1      Build the latest version of branch given by VERSION
+TEST=1        Run tests after build
+CACHE=0       Build without cache
 
 
 endef
