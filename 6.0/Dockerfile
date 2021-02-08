@@ -1,6 +1,6 @@
 # BUILD redisfab/redis:${REDIS_VER}-${ARCH}-${OSNICK}
 
-ARG REDIS_VER=6.0.9
+ARG REDIS_VER=6.0.10
 
 # OS=debian:buster-slim|debian:stretch-slim|ubuntu:bionic
 ARG OS=debian:buster-slim
@@ -57,8 +57,8 @@ RUN ./build-fix-2
 
 # note: ARCH may break build if non-empty
 RUN set -ex; \
-	if [ -e /opt/rh/devtoolset-8/enable ]; then \
-		source /opt/rh/devtoolset-8/enable ;\
+	if [ -e /opt/rh/devtoolset-9/enable ]; then \
+		source /opt/rh/devtoolset-9/enable ;\
 	fi ;\
 	export BUILD_TLS=yes; \
 	ARCH= make V=1 -C /usr/src/redis -j $(nproc) all; \
