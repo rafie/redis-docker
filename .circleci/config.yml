@@ -33,7 +33,8 @@ jobs:
             if [[ <<parameters.platform>> == centos7 ]]; then
                 make build publish OSNICK=<<parameters.platform>> X64=1 STD_VERSIONS=1
             else
-                make build publish CROSS=1 OSNICK=<<parameters.platform>> STD_VERSIONS=1
+                # make build publish CROSS=1 OSNICK=<<parameters.platform>> STD_VERSIONS=1
+                make build publish OSNICK=<<parameters.platform>> X64=1 STD_VERSIONS=1
             fi
           no_output_timeout: 30m
 
