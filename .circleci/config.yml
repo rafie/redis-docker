@@ -1,7 +1,7 @@
 version: 2.1
 
 commands:
-  prebuild:
+  setup-executor:
     steps:
       - run:
           name: Setup executor
@@ -9,13 +9,42 @@ commands:
             apt-get -qq update
             apt-get -q install -y git openssh-client curl ca-certificates make tar gzip
             bash <(curl -fsSL https://get.docker.com)
+      - setup_remote_docker:
+          docker_layer_caching: true
+
+  checkout-all:
+    steps:
       - checkout
-      - setup_remote_docker
       - run:
-          name: Setup
+          name: Checkout submodules
+          command: git submodule update --init --recursive
+
+  setup-automation:
+    steps:
+      - run:
+          name: Setup automation
           command: |
-            git submodule update --init --recursive
+            git submodule update --init deps/readies
             ./deps/readies/bin/getpy3
+
+  prebuild:
+    steps:
+      - setup-executor
+      - checkout-all
+      - setup-automation
+      - run:
+          name: Setup Docker
+          command: |
+            docker login --username redisfab --password "$DOCKER_REDISFAB_PWD"
+
+  vm-prebuild:
+    steps:
+      - checkout-all
+      - setup-automation
+      - run:
+          name: Setup Docker
+          command: |
+            bash <(curl -fsSL https://get.docker.com)
             docker login --username redisfab --password "$DOCKER_REDISFAB_PWD"
 
 jobs:
@@ -30,8 +59,22 @@ jobs:
       - run:
           name: Build
           command: |
-            make build publish OSNICK=<<parameters.platform>> X64=1 STD_VERSIONS=1
-            # make build publish CROSS=1 OSNICK=<<parameters.platform>> STD_VERSIONS=1
+            make build publish OSNICK=<<parameters.platform>> STD_VERSIONS=1
+          no_output_timeout: 30m
+
+  arm-build:
+    parameters:
+      platform:
+        type: string
+    machine:
+      image: ubuntu-2004:202101-01
+    resource_class: arm.medium
+    steps:
+      - vm-prebuild
+      - run:
+          name: Build
+          command: |
+            make build publish OSNICK=<<parameters.platform>> STD_VERSIONS=1
           no_output_timeout: 30m
 
 
@@ -58,7 +101,12 @@ workflows:
           <<: *on-any-branch
           matrix:
             parameters:
-              platform: [centos7, centos8, focal, bionic, xenial, trusty, buster, bullseye]
+              platform: [centos8, centos7, hirsute, focal, bionic, xenial, trusty, bullseye, buster]
+      - arm-build:
+          <<: *on-any-branch
+          matrix:
+            parameters:
+              platform: [centos8, centos7, hirsute, focal, bionic, xenial, trusty, bullseye, buster]
 
   weekly:
     triggers:
@@ -73,4 +121,8 @@ workflows:
       - build:
           matrix:
             parameters:
-              platform: [centos7, centos8, focal, bionic, xenial, trusty, buster, bullseye]
+              platform: [centos8, centos7, hirsute, focal, bionic, xenial, trusty, bullseye, buster]
+      - arm-build:
+          matrix:
+            parameters:
+              platform: [centos8, centos7, hirsute, focal, bionic, xenial, trusty, bullseye, buster]
