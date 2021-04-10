@@ -48,7 +48,7 @@ commands:
             docker login --username redisfab --password "$DOCKER_REDISFAB_PWD"
 
 jobs:
-  build:
+  x64-build:
     parameters:
       platform:
         type: string
@@ -62,7 +62,7 @@ jobs:
             make build publish OSNICK=<<parameters.platform>> STD_VERSIONS=1
           no_output_timeout: 30m
 
-  arm-build:
+  arm8-build:
     parameters:
       platform:
         type: string
@@ -97,12 +97,12 @@ workflows:
   version: 2
   general:
     jobs:
-      - build:
+      - x64-build:
           <<: *on-any-branch
           matrix:
             parameters:
               platform: [centos8, centos7, hirsute, focal, bionic, xenial, trusty, bullseye, buster]
-      - arm-build:
+      - arm8-build:
           <<: *on-any-branch
           matrix:
             parameters:
@@ -118,11 +118,11 @@ workflows:
                only:
                  - master
     jobs:
-      - build:
+      - x64-build:
           matrix:
             parameters:
               platform: [centos8, centos7, hirsute, focal, bionic, xenial, trusty, bullseye, buster]
-      - arm-build:
+      - arm8-build:
           matrix:
             parameters:
               platform: [centos8, centos7, hirsute, focal, bionic, xenial, trusty, bullseye, buster]
