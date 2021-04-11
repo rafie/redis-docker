@@ -48,7 +48,7 @@ commands:
             docker login --username redisfab --password "$DOCKER_REDISFAB_PWD"
 
 jobs:
-  x64-build:
+  build-x64:
     parameters:
       platform:
         type: string
@@ -62,7 +62,7 @@ jobs:
             make build publish OSNICK=<<parameters.platform>> STD_VERSIONS=1
           no_output_timeout: 30m
 
-  arm8-build:
+  build-arm8:
     parameters:
       platform:
         type: string
@@ -97,16 +97,16 @@ workflows:
   version: 2
   general:
     jobs:
-      - x64-build:
+      - build-x64:
           <<: *on-any-branch
           matrix:
             parameters:
-              platform: [centos8, centos7, hirsute, focal, bionic, xenial, trusty, bullseye, buster]
-      - arm8-build:
+              platform: [centos8, centos7, focal, bionic, xenial, trusty, bullseye, buster] # hirsute
+      - build-arm8:
           <<: *on-any-branch
           matrix:
             parameters:
-              platform: [centos8, centos7, hirsute, focal, bionic, xenial, trusty, bullseye, buster]
+              platform: [centos8, centos7, focal, bionic, xenial, trusty, bullseye, buster] # hirsute
 
   weekly:
     triggers:
@@ -118,11 +118,11 @@ workflows:
                only:
                  - master
     jobs:
-      - x64-build:
+      - build-x64:
           matrix:
             parameters:
-              platform: [centos8, centos7, hirsute, focal, bionic, xenial, trusty, bullseye, buster]
-      - arm8-build:
+              platform: [centos8, centos7, focal, bionic, xenial, trusty, bullseye, buster] # hirsute
+      - build-arm8:
           matrix:
             parameters:
-              platform: [centos8, centos7, hirsute, focal, bionic, xenial, trusty, bullseye, buster]
+              platform: [centos8, centos7, focal, bionic, xenial, trusty, bullseye, buster] # hirsute
