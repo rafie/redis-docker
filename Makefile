@@ -94,12 +94,14 @@ OS.centos7=centos:7
 OS.centos8=centos:8
 OS.fedora=fedora:latest
 OS.fedora33=fedora:33
-#OS.fedora34=fedora:34
+OS.fedora34=fedora:34
+OS.alpine3=alpine:3
+OS.alpineedge=alpine:edge
 #OS.fedora35=fedora:35
 #OS.rawhide=fedora:latest
 OS.rhel7.4=rhel:7.4
-#OS.alpine3=alpine:3
-#OS.alpineedge=alpine:edge
+OS.alpine3=alpine:3
+OS.alpineedge=alpine:edge
 OS=$(OS.$(OSNICK))
 
 ifeq ($(OS),)
@@ -112,7 +114,10 @@ UID.centos7=997
 UID.centos8=996
 UID.fedora=989
 UID.fedora33=989
+UID.fedora34=989
 UID.rhel7.4=800
+UID.alpine3=800
+UID.alpineedge=800
 ifeq ($(UID.$(OSNICK)),)
 UID=999
 else

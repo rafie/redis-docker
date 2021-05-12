@@ -35,8 +35,15 @@ class RedisSetup(paella.Setup):
     def macos(self):
         self.install("openssl")
 
+    def alpine(self):
+        self.install("gcc make openssl openssl-dev libatomic dev86 musl-dev")
+
     def common_last(self):
-        self.install("dirmngr gnupg patch")
+        if self.dist != "alpine":
+            self.install("dirmngr gnupg patch")
+        else:
+            self.install("patch gnupg")
+
 
 #----------------------------------------------------------------------------------------------
 
