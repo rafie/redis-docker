@@ -94,7 +94,12 @@ OS.centos7=centos:7
 OS.centos8=centos:8
 OS.fedora=fedora:latest
 OS.fedora33=fedora:33
+#OS.fedora34=fedora:34
+#OS.fedora35=fedora:35
+#OS.rawhide=fedora:latest
 OS.rhel7.4=rhel:7.4
+#OS.alpine3=alpine:3
+#OS.alpineedge=alpine:edge
 OS=$(OS.$(OSNICK))
 
 ifeq ($(OS),)
@@ -206,7 +211,7 @@ build_native:
 endef
 
 define build_arm # (1=arch)
-build_$(1): 
+build_$(1):
 	@echo "Building $(STEM):$(VERSION)-$(ARCH)-$(OSNICK) ..."
 	@$(NOP) $(DOCKER) build $(BUILD_OPT) -t $(STEM)-xbuild:$(VERSION)-$(1)-$(OSNICK) -f $(MAJOR)/Dockerfile.arm \
 		--build-arg ARCH=$(1) \
@@ -262,7 +267,7 @@ define HELP
 make [build|publish] [X64=1|ARM8=1|ARM7=1] [OSNICK=<nick> | OS=<os>]
      [VERSION=<ver> | VERSIONS="<ver>..."]
      [STD_VERSIONS=1]
-     [CROSS=1] 
+     [CROSS=1]
 
 build    Build image(s)
 publish  Push image(s) to Docker Hub
@@ -271,7 +276,7 @@ Arguments:
 OSNICK=nick         nick=buster|stretch|xenial|bionic|centos6|centos7|centos8|fedora30
 OS=os               (optional) OS Docker image name (e.g., debian:buster-slim)
 VERSION=ver         Redis version
-VERSIONS="vers..."  Multiple Redis versions  
+VERSIONS="vers..."  Multiple Redis versions
 STD_VERSIONS=1      Build latest versions of 6.0 and 6.2 branches
 MASTER=1            Build sources from master branch ("edge" version)
 LATEST=1            Build the latest version of branch given by VERSION
