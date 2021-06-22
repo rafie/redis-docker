@@ -10,6 +10,7 @@ commands:
             apt-get -q install -y git openssh-client curl ca-certificates make tar gzip
             bash <(curl -fsSL https://get.docker.com)
       - setup_remote_docker:
+          version: 20.10.2
           docker_layer_caching: true
 
   checkout-all:
@@ -45,6 +46,7 @@ commands:
           name: Setup Docker
           command: |
             bash <(curl -fsSL https://get.docker.com)
+            docker version
             docker login --username redisfab --password "$DOCKER_REDISFAB_PWD"
 
 jobs:
@@ -101,12 +103,12 @@ workflows:
           <<: *on-any-branch
           matrix:
             parameters:
-              platform: [centos8, centos7, focal, bionic, xenial, trusty, bullseye, buster] # hirsute
+              platform: [centos8, centos7, focal, bionic, xenial, trusty, bullseye, buster, fedora33, alpine3] # hirsute, fedora34, fedora35, alpineedge
       - build-arm8:
           <<: *on-any-branch
           matrix:
             parameters:
-              platform: [centos8, centos7, focal, bionic, xenial, trusty, bullseye, buster] # hirsute
+              platform: [centos8, centos7, focal, bionic, xenial, trusty, bullseye, buster, fedora33, alpine3] # hirsute, fedora34, fedora35, alpineedge
 
   weekly:
     triggers:
@@ -121,8 +123,8 @@ workflows:
       - build-x64:
           matrix:
             parameters:
-              platform: [centos8, centos7, focal, bionic, xenial, trusty, bullseye, buster] # hirsute
+              platform: [centos8, centos7, focal, bionic, xenial, trusty, bullseye, buster, fedora33, alpine3] # hirsute, fedora34, fedora35, alpineedge
       - build-arm8:
           matrix:
             parameters:
-              platform: [centos8, centos7, focal, bionic, xenial, trusty, bullseye, buster] # hirsute
+              platform: [centos8, centos7, focal, bionic, xenial, trusty, bullseye, buster, fedora33, alpine3] # hirsute, fedora34, fedora35, alpineedge
