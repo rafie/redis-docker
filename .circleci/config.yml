@@ -104,11 +104,13 @@ workflows:
           matrix:
             parameters:
               platform: [centos8, centos7, focal, bionic, xenial, trusty, bullseye, buster, fedora33, alpine3] # hirsute, fedora34, fedora35, alpineedge
+          context: common
       - build-arm8:
           <<: *on-any-branch
           matrix:
             parameters:
               platform: [centos8, centos7, focal, bionic, xenial, trusty, bullseye, buster, fedora33, alpine3] # hirsute, fedora34, fedora35, alpineedge
+          context: common
 
   weekly:
     triggers:
@@ -117,14 +119,15 @@ workflows:
           cron: "21 17 * * 0"
           filters:
              branches:
-               only:
-                 - master
+               only: master
     jobs:
       - build-x64:
           matrix:
             parameters:
               platform: [centos8, centos7, focal, bionic, xenial, trusty, bullseye, buster, fedora33, alpine3] # hirsute, fedora34, fedora35, alpineedge
+          context: common
       - build-arm8:
           matrix:
             parameters:
               platform: [centos8, centos7, focal, bionic, xenial, trusty, bullseye, buster, fedora33, alpine3] # hirsute, fedora34, fedora35, alpineedge
+          context: common
