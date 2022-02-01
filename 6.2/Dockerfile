@@ -4,10 +4,10 @@ ARG REDIS_VER=6.2.4
 ARG REDIS_MAJOR=6.2
 
 # OS=debian:buster-slim|debian:stretch-slim|ubuntu:bionic
-ARG OS=debian:buster-slim
+ARG OS=debian:bullseye-slim
 
 # OSNICK=stretch|bionic|buster
-ARG OSNICK=buster
+ARG OSNICK=bullseye
 
 # ARCH=x64|arm64v8|arm32v7
 ARG ARCH=x64

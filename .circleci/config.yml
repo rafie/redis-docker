@@ -105,13 +105,13 @@ workflows:
           <<: *on-any-branch
           matrix:
             parameters:
-              platform: [ol8, centos7, hirsute, focal, bionic, xenial, trusty, bullseye, buster, fedora35] # centos8, alpine3, alpineedge
+              platform: [ol8, centos7, hirsute, focal, bionic, xenial, trusty, bullseye, buster, fedora33] # centos8, alpine3, alpineedge
           context: common
       - build-arm8:
           <<: *on-any-branch
           matrix:
             parameters:
-              platform: [centos7, hirsute, focal, bionic, xenial, trusty, bullseye, buster, fedora35] # centos8, alpine3, alpineedge
+              platform: [centos7, hirsute, focal, bionic, xenial, trusty, bullseye, buster, fedora33] # centos8, alpine3, alpineedge
           context: common
 
   weekly:
@@ -126,10 +126,10 @@ workflows:
       - build-x64:
           matrix:
             parameters:
-              platform: [ol8, centos7, hirsute, focal, bionic, xenial, trusty, bullseye, buster, fedora35] # centos8, alpine3, alpineedge
+              platform: [ol8, centos7, hirsute, focal, bionic, xenial, trusty, bullseye, buster, fedora33] # centos8, alpine3, alpineedge
           context: common
       - build-arm8:
           matrix:
             parameters:
-              platform: [centos7, hirsute, focal, bionic, xenial, trusty, bullseye, buster, fedora35] # centos8, alpine3, alpineedge
+              platform: [centos7, hirsute, focal, bionic, xenial, trusty, bullseye, buster, fedora33] # centos8, alpine3, alpineedge
           context: common
