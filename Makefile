@@ -117,9 +117,13 @@ endif
 #----------------------------------------------------------------------------------------------
 
 UID.centos7=997
+UID.centos8.4=996
 UID.centos8=996
+UID.centos9=999
 UID.ol7=995
 UID.ol8=995
+UID.alma8=996
+UID.rocky8=994
 UID.fedora=989
 UID.fedora33=989
 UID.fedora34=989
