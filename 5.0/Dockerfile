@@ -3,7 +3,7 @@
 ARG REDIS_VER=5.0.12
 
 # OS=debian:buster-slim|debian:stretch-slim|ubuntu:bionic
-ARG OS=debian:bullseye-slim
+ARG OS=debian:11.3-slim
 
 # OSNICK=stretch|bionic|buster
 ARG OSNICK=bullseye
