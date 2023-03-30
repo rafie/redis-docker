@@ -21,19 +21,24 @@ ARG ARCH
 RUN echo "Building Redis v${REDIS_VER} on ${OSNICK} (${OS}) for ${ARCH}"
 RUN uname -a; cat /etc/os-release
 
+RUN if [ -f /root/.profile ]; then sed -ie 's/mesg n/tty -s \&\& mesg -n/g' /root/.profile; fi
+SHELL ["/bin/bash", "-l", "-c"]
+
 WORKDIR /build
+
 ADD deps/ /build/deps/
 ADD ${REDIS_MAJOR}/system-setup.py /build/
 
 # ENV REDIS_DEPENDS "ca-certificates dirmngr gnupg wget gcc libc6-dev make"
 
-RUN /build/deps/readies/bin/getupdates
 RUN /build/deps/readies/bin/getbash
+RUN /build/deps/readies/bin/getupdates
 RUN /build/deps/readies/bin/getpy3
-RUN /build/system-setup.py
+RUN	/build/system-setup.py
+
 RUN gcc --version
 
-ENV GOSU_VERSION 1.14
+ENV GOSU_VERSION 1.16
 RUN set -ex ;\
 	/build/deps/readies/bin/getgosu ;\
 	gosu --version; \

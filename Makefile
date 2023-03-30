@@ -218,6 +218,7 @@ endif
 
 define build_native
 build_native:
+	@./deps/readies/bin/sep
 	@echo "Building $(STEM):$(VERSION)-$(ARCH)-$(OSNICK) ..."
 	@$(NOP) $(DOCKER) pull $(OS)
 	@$(NOP) $(DOCKER) buildx build $(BUILD_OPT) -t $(STEM):$(VERSION)-$(ARCH)-$(OSNICK) -f $(MAJOR)/Dockerfile \
@@ -236,6 +237,7 @@ endef
 
 define build_arm # (1=arch)
 build_$(1):
+	@./deps/readies/bin/sep
 	@echo "Building $(STEM):$(VERSION)-$(ARCH)-$(OSNICK) ..."
 	@$(NOP) $(DOCKER) build $(BUILD_OPT) -t $(STEM)-xbuild:$(VERSION)-$(1)-$(OSNICK) -f $(MAJOR)/Dockerfile.arm \
 		--build-arg ARCH=$(1) \
