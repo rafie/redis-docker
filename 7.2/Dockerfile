@@ -74,8 +74,8 @@ RUN ./build-fix-2
 # note: ARCH may break build if non-empty
 RUN set -ex; \
 	export BUILD_TLS=yes; \
-	ARCH= make REDIS_CFLAGS=-DUSE_JEMALLOC=${JEMALLOC} V=1 -C /usr/src/redis all; \
-	make -C /usr/src/redis install
+	/build/deps/readies/bin/runn ARCH= make REDIS_CFLAGS=-DUSE_JEMALLOC=${JEMALLOC} V=1 -C /usr/src/redis all; \
+	/build/deps/readies/bin/runn make -C /usr/src/redis install
 
 #----------------------------------------------------------------------------------------------
 FROM ${OS}

@@ -75,8 +75,8 @@ RUN set -ex ;\
 # note: ARCH may break build if non-empty
 
 RUN set -ex; \
-	ARCH= make V=1 -C /usr/src/redis all; \
-	make -C /usr/src/redis install
+	/build/deps/readies/bin/runn ARCH= make V=1 -C /usr/src/redis all; \
+	/build/deps/readies/bin/runn make -C /usr/src/redis install
 
 #----------------------------------------------------------------------------------------------
 FROM ${OS}
