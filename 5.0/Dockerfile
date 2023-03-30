@@ -1,11 +1,8 @@
 # BUILD redisfab/redis:${REDIS_VER}-${ARCH}-${OSNICK}
 
 ARG REDIS_VER=5.0.12
-
-# OS=debian:buster-slim|debian:stretch-slim|ubuntu:bionic
+ARG REDIS_MAJOR=5.0
 ARG OS=debian:bullseye-slim
-
-# OSNICK=stretch|bionic|buster
 ARG OSNICK=bullseye
 
 # ARCH=x64|arm64v8|arm32v7
@@ -17,6 +14,7 @@ ARG UID=999
 FROM ${OS} as builder
 
 ARG REDIS_VER
+ARG REDIS_MAJOR
 ARG OS
 ARG OSNICK
 ARG ARCH
@@ -25,7 +23,7 @@ RUN uname -a; cat /etc/os-release
 
 WORKDIR /build
 ADD deps/ /build/deps/
-ADD 5.0/system-setup.py /build/
+ADD ${REDIS_MAJOR}/system-setup.py /build/
 
 # ENV REDIS_DEPENDS "ca-certificates dirmngr gnupg wget gcc libc6-dev make"
 
@@ -42,7 +40,7 @@ RUN set -ex ;\
 	gosu nobody true
 
 ENV REDIS_VERSION ${REDIS_VER}
-ENV REDIS_DOWNLOAD_URL https://github.com/antirez/redis/archive/${REDIS_VER}.tar.gz
+ENV REDIS_DOWNLOAD_URL https://github.com/redis/redis/archive/${REDIS_VER}.tar.gz
 # ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-${REDIS_VER}.tar.gz
 ENV REDIS_DOWNLOAD_SHA 2139009799d21d8ff94fc40b7f36ac46699b9e1254086299f8d3b223ca54a375
 
@@ -58,7 +56,7 @@ RUN set -ex; \
 # (ports are not automatically exposed when running inside Docker, but rather explicitly by specifying -p / -P)
 # [1]: https://github.com/antirez/redis/commit/edd4d555df57dc84265fdfb4ef59a4678832f6da
 
-ADD 5.0/redis-5.0.patch /usr/src/redis/
+ADD ${REDIS_MAJOR}/redis-5.0.patch /usr/src/redis/
 RUN set -ex ;\
 	cd /usr/src/redis ;\
 	patch -p1 -i redis-5.0.patch
@@ -79,6 +77,7 @@ RUN set -ex; \
 FROM ${OS}
 
 ARG REDIS_VER
+ARG REDIS_MAJOR
 ARG ARCH
 ARG OSNICK
 ARG UID
@@ -106,7 +105,7 @@ RUN mkdir /data && chown redis:redis /data
 VOLUME /data
 WORKDIR /data
 
-COPY docker-entrypoint.sh /usr/local/bin/
+COPY ${REDIS_MAJOR}/docker-entrypoint.sh /usr/local/bin/
 RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
 
 ENTRYPOINT ["docker-entrypoint.sh"]
