@@ -86,7 +86,7 @@ ARG UID
 RUN echo "Building redisfab/redis-${ARCH}-${OSNICK}:${REDIS_VER} UID=${UID}"
 RUN uname -a; cat /etc/os-release
 
-COPY 5.0/platforms/setup.${OSNICK} /usr/local/bin/docker-setup
+COPY platforms/setup.${OSNICK} /usr/local/bin/docker-setup
 RUN chmod +x /usr/local/bin/docker-setup
 RUN /usr/local/bin/docker-setup
 RUN rm /usr/local/bin/docker-setup
@@ -94,7 +94,7 @@ RUN rm /usr/local/bin/docker-setup
 # Add our user and group first to make sure their IDs get assigned consistently,
 # regardless of whatever dependencies get added
 RUN set -xe; \
-    if [ -f /sbin/groupadd ] || [ -f /usr/sbin/groupadd]; then\
+    if [ -f /sbin/groupadd ] || [ -f /usr/sbin/groupadd ]; then\
         groupadd -r -g ${UID} redis && useradd -r -g redis -u ${UID} redis ;\
     else\
         addgroup --gid ${UID} redis && adduser --system --uid ${UID} redis ;\
@@ -106,7 +106,7 @@ RUN mkdir /data && chown redis:redis /data
 VOLUME /data
 WORKDIR /data
 
-COPY 5.0/docker-entrypoint.sh /usr/local/bin/
+COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
 
 ENTRYPOINT ["docker-entrypoint.sh"]

@@ -34,7 +34,7 @@ commons  Build common versions (with DO="<operations>")
 
 Arguments:
 CROSS=1          Perform cross-platform builds (typically, ARM7/8 on x64)
-OSNICK           buster|stretch|xenial|bionic|centos6|centos7|centos8|fedora30
+OSNICK           buster|stretch|xenial|bionic|centos6|centos7|centos8|fedora
 OS               (optional) OS Docker image name (e.g., debian:buster-slim)
 VERSION          Redis version (e.g. 6.0.9)
 MASTER=1         Build sources from master branch ("edge" version)
@@ -101,7 +101,7 @@ For outstanding `redis` image PRs, check [PRs with the "library/redis" label on 
 
 ---
 
--	[![build status badge](https://img.shields.io/github/workflow/status/docker-library/redis/GitHub%20CI/master?label=GitHub%20CI)](https://github.com/docker-library/redis/actions?query=workflow%3A%22GitHub+CI%22+branch%3Amaster)
+-	[![build status badge](https://img.shields.io/github/actions/workflow/status/docker-library/redis/ci.yml?branch=master&label=GitHub%20CI)](https://github.com/docker-library/redis/actions?query=workflow%3A%22GitHub+CI%22+branch%3Amaster)
 -	[![build status badge](https://img.shields.io/jenkins/s/https/doi-janky.infosiftr.net/job/update.sh/job/redis.svg?label=Automated%20update.sh)](https://doi-janky.infosiftr.net/job/update.sh/job/redis/)
 
 | Build | Status | Badges | (per-arch) |

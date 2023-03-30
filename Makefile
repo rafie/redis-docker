@@ -17,7 +17,7 @@ endif
 
 #----------------------------------------------------------------------------------------------
 
-STD_MAJORS=7.0 6.2 6.0 5.0
+STD_MAJORS=7.2 7.0 6.2 6.0 5.0
 
 ifeq ($(VERSION),)
 ifeq ($(VERSIONS),)
@@ -53,8 +53,10 @@ else ifeq ($(patsubst 6.0%,6.0,$(VERSION)),6.0)
 MAJOR=6.0
 else ifeq ($(patsubst 6.2%,6.2,$(VERSION)),6.2)
 MAJOR=6.2
-else ifeq ($(patsubst 7%,7,$(VERSION)),7)
+else ifeq ($(patsubst 7.0%,7.0,$(VERSION)),7.0)
 MAJOR=7.0
+else ifeq ($(patsubst 7.2%,7.2,$(VERSION)),7.2)
+MAJOR=7.2
 else
 ifneq ($(_HELP),1)
 $(info Strange Redis version: $(VERSION))
@@ -80,7 +82,7 @@ endif
 
 OS ?= debian:buster-slim
 
-# OSNICK=buster|stretch|trusty|xenial|bionic|centos6|centos7|centos8|fedora30
+# OSNICK=buster|stretch|trusty|xenial|bionic|centos6|centos7|centos8|fedora
 OSNICK ?= buster
 
 OS.trusty=ubuntu:trusty
@@ -104,7 +106,6 @@ OS.amzn2022=amazonlinux:2022
 OS.alma8=almalinux:8
 OS.rocky8=rockylinux:8
 OS.fedora=fedora:latest
-OS.fedora37=fedora:37
 OS.alpine3=alpine:3
 OS.alpineedge=alpine:edge
 #OS.rawhide=fedora:latest
@@ -129,9 +130,6 @@ UID.ol8=995
 UID.alma8=996
 UID.rocky8=994
 UID.fedora=989
-UID.fedora33=989
-UID.fedora34=989
-UID.fedora35=989
 UID.rhel7.4=800
 UID.alpine3=800
 UID.alpineedge=800
@@ -306,7 +304,7 @@ build    Build image(s)
 publish  Push image(s) to Docker Hub
 
 Arguments:
-OSNICK=nick         nick=buster|stretch|xenial|bionic|centos6|centos7|centos8|fedora30
+OSNICK=nick         nick=buster|stretch|xenial|bionic|centos6|centos7|centos8|fedora
 OS=os               (optional) OS Docker image name (e.g., debian:buster-slim)
 VERSION=ver         Redis version
 VERSIONS="vers..."  Multiple Redis versions
