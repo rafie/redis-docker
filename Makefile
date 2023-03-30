@@ -17,7 +17,7 @@ endif
 
 #----------------------------------------------------------------------------------------------
 
-STD_MAJORS=7.2 7.0 6.2 6.0 5.0
+STD_MAJORS=7 7.0 6.2 6.0 5.0
 
 ifeq ($(VERSION),)
 ifeq ($(VERSIONS),)
@@ -55,7 +55,7 @@ else ifeq ($(patsubst 6.2%,6.2,$(VERSION)),6.2)
 MAJOR=6.2
 else ifeq ($(patsubst 7.0%,7.0,$(VERSION)),7.0)
 MAJOR=7.0
-else ifeq ($(patsubst 7.2%,7.2,$(VERSION)),7.2)
+else ifeq ($(patsubst 7%,7,$(VERSION)),7)
 MAJOR=7.2
 else
 ifneq ($(_HELP),1)
@@ -181,9 +181,12 @@ endif
 
 #----------------------------------------------------------------------------------------------
 
+ifneq ($(VERSION),)
+
+#----------------------------------------------------------------------------------------------
+
 build:
-	@./deps/readies/bin/sep
-	@printf -- '-%.0s' $$(seq 1 $$(stty size | cut -d" " -f2)); echo
+	@./deps/readies/bin/sep1
 ifeq ($(ARCH),arm64v8)
 	@$(NOP) $(DOCKER) buildx create --use --name insecure-builder --buildkitd-flags '--allow-insecure-entitlement security.insecure' || true
 endif
@@ -203,9 +206,13 @@ endif
 #----------------------------------------------------------------------------------------------
 
 publish:
-	@printf -- '-%.0s' $$(seq 1 $$(stty size | cut -d" " -f2)); echo
+	@./deps/readies/bin/sep1
 	@$(NOP) $(DOCKER) push $(STEM):$(VERSION)-$(ARCH)-$(OSNICK)
 	@$(NOP) $(DOCKER) push $(STEM):$(MAJOR)-latest-$(ARCH)-$(OSNICK)
+
+#----------------------------------------------------------------------------------------------
+
+endif # VERSION
 
 #----------------------------------------------------------------------------------------------
 
