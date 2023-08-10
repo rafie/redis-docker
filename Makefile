@@ -214,7 +214,9 @@ endif
 publish:
 	@./deps/readies/bin/sep1
 	@$(NOP) $(DOCKER) push $(STEM):$(VERSION)-$(ARCH)-$(OSNICK)
+ifneq ($(VERSION),unstable)
 	@$(NOP) $(DOCKER) push $(STEM):$(MAJOR)-latest-$(ARCH)-$(OSNICK)
+endif
 
 #----------------------------------------------------------------------------------------------
 

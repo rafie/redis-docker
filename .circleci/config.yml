@@ -101,7 +101,7 @@ jobs:
 
 #----------------------------------------------------------------------------------------------------------------------------------
 
-on-any-branch: &on-any-branch
+always: &always
   filters:
     branches:
       only: /.*/
@@ -122,13 +122,13 @@ workflows:
   general:
     jobs:
       - build-x64:
-          <<: *on-any-branch
+          <<: *always
           matrix:
             parameters:
               platform: [amzn2, rocky8, centos7, jammy, focal, bionic, xenial, bullseye, buster, fedora] # alpine3, alpine
           context: common
       - build-arm8:
-          <<: *on-any-branch
+          <<: *always
           matrix:
             parameters:
               platform: [rocky8, jammy, focal, bionic, bullseye, buster, fedora] # alpine3, alpine
